@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import CartLink from "@/components/CartLink";
 
 export const metadata: Metadata = {
   title: "Burning Star — Design to Defy",
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <CartLink />
+          {children}
+        </Providers>
       </body>
     </html>
   );

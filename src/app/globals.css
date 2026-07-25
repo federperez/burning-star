@@ -1927,6 +1927,128 @@ footer {
   }
 }
 
+.cart-page {
+  min-height: 100vh;
+  padding: clamp(110px, 10vw, 150px) clamp(18px, 5vw, 75px) 80px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cart-page h1 {
+  margin: 10px 0 30px;
+  font-size: clamp(34px, 5vw, 56px);
+}
+
+.cart-page .primary-button {
+  margin-top: 20px;
+}
+
+.cart-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  background: rgba(26, 26, 29, 0.4);
+}
+
+.cart-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-row-info h3 {
+  margin-bottom: 4px;
+  font-family: "Oxanium", sans-serif;
+  font-size: 13px;
+}
+
+.cart-row-info span {
+  color: var(--ash);
+  font-size: 11px;
+}
+
+.cart-row-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 12px "Oxanium", sans-serif;
+}
+
+.cart-row-qty button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-row-qty button:hover {
+  border-color: var(--burn);
+}
+
+.cart-row-subtotal {
+  min-width: 90px;
+  text-align: right;
+  color: var(--burn);
+  font: 700 13px "Oxanium", sans-serif;
+}
+
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0;
+  margin-bottom: 20px;
+  border-top: 1px solid var(--line);
+  font: 700 13px "Oxanium", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.cart-total {
+  color: var(--burn);
+  font-size: 20px;
+}
+
+.cart-fab {
+  position: fixed;
+  top: 34px;
+  right: clamp(16px, 3.5vw, 58px);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  color: var(--cold);
+  border: 1px solid var(--line);
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(8px);
+  font: 700 8px "Oxanium", sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.cart-fab:hover {
+  border-color: var(--burn);
+}
+
+.cart-fab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  color: var(--cold);
+  background: var(--burn);
+  border-radius: 999px;
+  font-size: 9px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
