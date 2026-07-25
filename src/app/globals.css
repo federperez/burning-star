@@ -1734,6 +1734,199 @@ footer {
   }
 }
 
+.admin-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+  background: var(--space);
+}
+
+.admin-sidebar {
+  padding: 30px 20px;
+  border-right: 1px solid var(--line);
+  background: var(--gunmetal);
+}
+
+.admin-nav {
+  display: grid;
+  gap: 4px;
+  margin-top: 18px;
+}
+
+.admin-nav a {
+  padding: 10px 8px;
+  color: var(--ash);
+  font: 600 10px "Oxanium", sans-serif;
+  letter-spacing: 0.1em;
+  border-left: 2px solid transparent;
+}
+
+.admin-nav a:hover {
+  color: var(--cold);
+  border-left-color: var(--burn);
+}
+
+.admin-content {
+  padding: clamp(24px, 4vw, 50px);
+}
+
+.admin-page h1 {
+  margin-bottom: 30px;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.admin-section {
+  margin-bottom: 46px;
+}
+
+.admin-section h2 {
+  margin-bottom: 16px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--ash);
+}
+
+.admin-form {
+  max-width: 460px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: rgba(26, 26, 29, 0.52);
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-form textarea {
+  padding: 10px 14px;
+  color: var(--cold);
+  border: 1px solid rgba(242, 242, 242, 0.3);
+  background: rgba(5, 5, 5, 0.6);
+  outline: none;
+  font: 500 13px "Space Grotesk", sans-serif;
+  resize: vertical;
+}
+
+.admin-product-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  background: rgba(26, 26, 29, 0.4);
+}
+
+.admin-product-inactive {
+  opacity: 0.5;
+}
+
+.admin-product-row-editing {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.admin-product-main h3 {
+  margin-bottom: 4px;
+  font-family: "Oxanium", sans-serif;
+  font-size: 13px;
+}
+
+.admin-product-main p {
+  margin: 0;
+  color: var(--ash);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.admin-product-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-product-actions button {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font: 600 9px "Oxanium", sans-serif;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.admin-product-actions button:hover {
+  border-color: var(--burn);
+}
+
+.admin-link-button {
+  align-self: flex-start;
+  margin-top: 10px;
+  color: var(--ash);
+  background: none;
+  border: 0;
+  font: 600 9px "Oxanium", sans-serif;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.admin-order-list {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-order-row {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: rgba(26, 26, 29, 0.4);
+}
+
+.admin-order-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+  font: 600 11px "Oxanium", sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.admin-order-status {
+  padding: 2px 8px;
+  color: var(--ash);
+  border: 1px solid var(--line);
+}
+
+.admin-order-status.status-paid {
+  color: var(--cold);
+  border-color: var(--burn);
+  background: var(--burn);
+}
+
+.admin-order-items {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ash);
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
