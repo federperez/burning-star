@@ -6,7 +6,7 @@ export default function BurningStarHome() {
   const layerRef = useRef<HTMLDivElement>(null);
   const signalWindowRef = useRef<HTMLButtonElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
-  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const toastTimerRef = useRef<number | undefined>(undefined);
   const lastTrailRef = useRef(0);
 
   const [navOpen, setNavOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function BurningStarHome() {
     window.clearTimeout(toastTimerRef.current);
     toastTimerRef.current = window.setTimeout(() => {
       setToast((prev) => ({ ...prev, show: false }));
-    }, 2400);
+    }, 2400) as unknown as number;
   };
 
   useEffect(() => {
