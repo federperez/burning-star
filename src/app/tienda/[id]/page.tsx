@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { getFeaturedProduct, type StorefrontProduct } from "@/lib/catalog";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductGallery from "@/components/ProductGallery";
 
@@ -12,9 +13,27 @@ export default async function ProductDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = await prisma.product.findUnique({ where: { id } });
+  let product: StorefrontProduct | undefined = getFeaturedProduct(id);
 
-  if (!product || !product.active) {
+  if (!product && process.env.DATABASE_URL) {
+    try {
+      const databaseProduct = await prisma.product.findUnique({ where: { id } });
+      if (databaseProduct?.active) {
+        product = {
+          id: databaseProduct.id,
+          name: databaseProduct.name,
+          description: databaseProduct.description,
+          price: Number(databaseProduct.price),
+          stock: databaseProduct.stock,
+          imageUrl: databaseProduct.imageUrl,
+        };
+      }
+    } catch {
+      product = undefined;
+    }
+  }
+
+  if (!product) {
     notFound();
   }
 
@@ -40,7 +59,7 @@ export default async function ProductDetailPage({
         <h1>{product.name}</h1>
         <span className="product-price-label">PRECIO / ARS</span>
         <p className="product-price">
-          ${Number(product.price).toLocaleString("es-AR")}
+          ${product.price.toLocaleString("es-AR")}
         </p>
         <div className="product-description">
           <span>CARACTERÍSTICAS / DESCRIPTION</span>
@@ -50,7 +69,7 @@ export default async function ProductDetailPage({
           product={{
             id: product.id,
             name: product.name,
-            price: Number(product.price),
+            price: product.price,
             imageUrl: product.imageUrl,
           }}
           stock={product.stock}

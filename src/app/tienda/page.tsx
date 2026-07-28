@@ -1,13 +1,33 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { featuredProducts, type StorefrontProduct } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
 
 export default async function ShopPage() {
-  const products = await prisma.product.findMany({
-    where: { active: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let products: StorefrontProduct[] = featuredProducts;
+
+  if (process.env.DATABASE_URL) {
+    try {
+      const databaseProducts = await prisma.product.findMany({
+        where: { active: true },
+        orderBy: { createdAt: "desc" },
+      });
+
+      if (databaseProducts.length > 0) {
+        products = databaseProducts.map((product) => ({
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: Number(product.price),
+          stock: product.stock,
+          imageUrl: product.imageUrl,
+        }));
+      }
+    } catch {
+      products = featuredProducts;
+    }
+  }
 
   return (
     <main className="shop-page">
@@ -40,7 +60,7 @@ export default async function ShopPage() {
               <div className="shop-card-info">
                 <h3>{product.name}</h3>
                 <span className="shop-card-price">
-                  ${Number(product.price).toLocaleString("es-AR")}
+                  ${product.price.toLocaleString("es-AR")}
                 </span>
                 {product.stock === 0 && (
                   <span className="shop-card-soldout">SIN STOCK</span>
