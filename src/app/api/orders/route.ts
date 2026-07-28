@@ -35,7 +35,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    if (!Number.isFinite(quantity) || quantity <= 0) {
+    if (!Number.isInteger(quantity) || quantity <= 0) {
       return NextResponse.json({ error: "Cantidad inválida." }, { status: 400 });
     }
     if (product.stock < quantity) {

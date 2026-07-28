@@ -7,6 +7,7 @@ export type CartItem = {
   name: string;
   price: number;
   imageUrl: string | null;
+  stock: number;
   quantity: number;
 };
 
@@ -24,20 +25,58 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "burning-star-cart";
 
+function restoreCartItems(value: unknown): CartItem[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const candidate = item as Partial<CartItem>;
+
+    if (
+      typeof candidate.productId !== "string" ||
+      typeof candidate.name !== "string" ||
+      typeof candidate.price !== "number" ||
+      typeof candidate.quantity !== "number"
+    ) {
+      return [];
+    }
+
+    const stock =
+      typeof candidate.stock === "number" && candidate.stock > 0
+        ? Math.floor(candidate.stock)
+        : Number.MAX_SAFE_INTEGER;
+
+    return [
+      {
+        productId: candidate.productId,
+        name: candidate.name,
+        price: candidate.price,
+        imageUrl: typeof candidate.imageUrl === "string" ? candidate.imageUrl : null,
+        stock,
+        quantity: Math.max(1, Math.min(Math.floor(candidate.quantity), stock)),
+      },
+    ];
+  });
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setItems(JSON.parse(stored));
-      } catch {
-        // ignore corrupted cart data
+    const timer = window.setTimeout(() => {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          setItems(restoreCartItems(JSON.parse(stored)));
+        } catch {
+          // ignore corrupted cart data
+        }
       }
-    }
-    setHydrated(true);
+      setHydrated(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -51,11 +90,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (existing) {
         return prev.map((i) =>
           i.productId === item.productId
-            ? { ...i, quantity: i.quantity + quantity }
+            ? {
+                ...i,
+                ...item,
+                quantity: Math.min(i.quantity + quantity, item.stock),
+              }
             : i
         );
       }
-      return [...prev, { ...item, quantity }];
+      return [...prev, { ...item, quantity: Math.min(quantity, item.stock) }];
     });
   };
 
@@ -69,7 +112,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setItems((prev) =>
-      prev.map((i) => (i.productId === productId ? { ...i, quantity } : i))
+      prev.map((i) =>
+        i.productId === productId
+          ? { ...i, quantity: Math.min(quantity, i.stock) }
+          : i
+      )
     );
   };
 

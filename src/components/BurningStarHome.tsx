@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 export default function BurningStarHome() {
   const layerRef = useRef<HTMLDivElement>(null);
@@ -237,7 +238,11 @@ export default function BurningStarHome() {
         </div>
 
         <div className="archive-grid">
-          <article className="archive-card">
+          <Link
+            className="archive-card"
+            href="/producto/core-identity"
+            aria-label="Ver producto Core Identity"
+          >
             <div className="card-head">
               <span>[01]</span>
               <span>BS® / FILE</span>
@@ -259,17 +264,15 @@ export default function BurningStarHome() {
                 <h3>CORE IDENTITY</h3>
                 <p>STAR / FLAME / SIGNAL</p>
               </div>
-              <button
-                type="button"
-                aria-label="Abrir Core Identity"
-                onClick={() => notify("CORE IDENTITY / FILE OPEN")}
-              >
-                ↗
-              </button>
+              <span className="card-action" aria-hidden="true">↗</span>
             </div>
-          </article>
+          </Link>
 
-          <article className="archive-card">
+          <Link
+            className="archive-card"
+            href="/producto/broadcast"
+            aria-label="Ver producto Broadcast"
+          >
             <div className="card-head">
               <span>[02]</span>
               <span>BS® / FILE</span>
@@ -283,17 +286,15 @@ export default function BurningStarHome() {
                 <h3>BROADCAST</h3>
                 <p>WEB BANNER / 2026</p>
               </div>
-              <button
-                type="button"
-                aria-label="Abrir Broadcast"
-                onClick={() => notify("BROADCAST / FILE OPEN")}
-              >
-                ↗
-              </button>
+              <span className="card-action" aria-hidden="true">↗</span>
             </div>
-          </article>
+          </Link>
 
-          <article className="archive-card">
+          <Link
+            className="archive-card"
+            href="/producto/burning-object"
+            aria-label="Ver producto Burning Object"
+          >
             <div className="card-head">
               <span>[03]</span>
               <span>BS® / FILE</span>
@@ -314,15 +315,9 @@ export default function BurningStarHome() {
                 <h3>BURNING OBJECT</h3>
                 <p>SYSTEM MATERIAL / RED</p>
               </div>
-              <button
-                type="button"
-                aria-label="Abrir Burning Object"
-                onClick={() => notify("BURNING OBJECT / FILE OPEN")}
-              >
-                ↗
-              </button>
+              <span className="card-action" aria-hidden="true">↗</span>
             </div>
-          </article>
+          </Link>
         </div>
       </section>
 
