@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,15 +29,15 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/");
+    router.push("/admin/products");
     router.refresh();
   };
 
   return (
     <main className="auth-page">
       <div className="auth-card">
-        <span className="section-number">SIGN IN</span>
-        <h1>ENTRAR</h1>
+        <span className="section-number">PRIVATE SYSTEM</span>
+        <h1>ADMIN</h1>
         {error && <p className="auth-error">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="auth-field">
@@ -67,9 +66,7 @@ export default function LoginPage() {
             {loading ? "ENTRANDO..." : "ENTRAR ↗"}
           </button>
         </form>
-        <p className="auth-switch">
-          ¿No tenés cuenta? <Link href="/register">Registrate acá</Link>
-        </p>
+        <p className="auth-switch">ACCESO EXCLUSIVO PARA ADMINISTRAR BURNING STAR.</p>
       </div>
     </main>
   );

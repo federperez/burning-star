@@ -19,7 +19,7 @@ export default async function AdminOrdersPage() {
           {orders.map((order) => (
             <div key={order.id} className="admin-order-row">
               <div className="admin-order-head">
-                <span>{order.user.email}</span>
+                <span>{order.customerEmail ?? order.user?.email ?? "SIN EMAIL"}</span>
                 <span className={`admin-order-status status-${order.status.toLowerCase()}`}>
                   {order.status}
                 </span>
@@ -29,11 +29,19 @@ export default async function AdminOrdersPage() {
               <ul className="admin-order-items">
                 {order.items.map((item) => (
                   <li key={item.id}>
-                    {item.quantity}× {item.product.name} — $
+                    {item.quantity}× {item.productName ?? item.product?.name ?? "PRODUCTO"} — $
                     {Number(item.unitPrice).toLocaleString("es-AR")}
                   </li>
                 ))}
               </ul>
+              {order.customerName && (
+                <p className="admin-order-delivery">
+                  {order.customerName} · {order.customerPhone} · {order.shippingAddress}
+                  {order.apartment ? `, ${order.apartment}` : ""} · {order.city},{" "}
+                  {order.province} ({order.postalCode})
+                </p>
+              )}
+              {order.notes && <p className="admin-order-notes">NOTA: {order.notes}</p>}
             </div>
           ))}
         </div>

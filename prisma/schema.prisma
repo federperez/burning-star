@@ -44,23 +44,35 @@ model Product {
 }
 
 model Order {
-  id          String      @id @default(cuid())
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  status      OrderStatus @default(PENDING)
-  total       Decimal     @db.Decimal(10, 2)
-  mpPaymentId String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  items       OrderItem[]
+  id              String      @id @default(cuid())
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id])
+  accessToken     String?     @unique
+  customerEmail   String?
+  customerName    String?
+  customerPhone   String?
+  shippingAddress String?
+  apartment       String?
+  city            String?
+  province        String?
+  postalCode      String?
+  notes           String?
+  status          OrderStatus @default(PENDING)
+  total           Decimal     @db.Decimal(10, 2)
+  mpPaymentId     String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  items           OrderItem[]
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
-  orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  unitPrice Decimal @db.Decimal(10, 2)
+  id              String   @id @default(cuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id])
+  productId       String?
+  product         Product? @relation(fields: [productId], references: [id])
+  productName     String?
+  productImageUrl String?
+  quantity        Int
+  unitPrice       Decimal  @db.Decimal(10, 2)
 }
